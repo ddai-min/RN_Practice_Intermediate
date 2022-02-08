@@ -14,14 +14,14 @@ import reducers from './app/store/reducers'
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
 const createStoreWithMiddleware = createStore(
-  [reducers],
-  [composeEnhancers(applyMiddleware(promiseMiddleware))]
+  reducers,
+  composeEnhancers(applyMiddleware(promiseMiddleware))
 )
 
-const appRedux = () => {
-  ;<Provider store={createStoreWithMiddleware}>
+const appRedux = () => (
+  <Provider store={createStoreWithMiddleware}>
     <App />
   </Provider>
-}
+)
 
 AppRegistry.registerComponent(appName, () => appRedux)

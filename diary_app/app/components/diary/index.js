@@ -5,23 +5,19 @@
  * @format
  * @flow strict-local
  */
-import 'react-native-gesture-handler'
-
 import React, { Component } from 'react'
 import { StyleSheet, View, Text } from 'react-native'
-import { NavigationContainer } from '@react-navigation/native'
-import { RootNavigator } from './routes'
 
-class App extends Component {
+class DiaryComponent extends Component {
   render() {
     return (
-      <NavigationContainer>
-        <RootNavigator />
-      </NavigationContainer>
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Text>Diary Screen</Text>
+      </View>
     )
   }
 }
 
 const styles = StyleSheet.create({})
 
-export default App
+export default DiaryComponent
