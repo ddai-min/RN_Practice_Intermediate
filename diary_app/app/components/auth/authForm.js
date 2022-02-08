@@ -15,30 +15,39 @@ import {
   Platform
 } from 'react-native'
 import Input from '../../utils/forms/input'
+import ValidationRules from '../../utils/forms/validationRules'
 
 class AuthForm extends Component {
   state = {
-    type: 'Login',
-    action: 'Login',
-    actionMode: '새로 등록할게요.',
+    type: '로그인', // 로그인 / 등록
+    action: '로그인', // 로그인 / 등록
+    actionMode: '회원가입', // 회원가입 / 로그인 화면으로
     hasErrors: false,
     form: {
       email: {
         value: '',
         type: 'textinput',
-        rules: {},
+        rules: {
+          isRequired: true,
+          isEmail: true
+        },
         valid: false
       },
       password: {
         value: '',
         type: 'textinput',
-        rules: {},
+        rules: {
+          isRequired: true,
+          minLength: 6
+        },
         valid: false
       },
       confirmPassword: {
         value: '',
         type: 'textinput',
-        rules: {},
+        rules: {
+          confirmPassword: 'password'
+        },
         valid: false
       }
     }
@@ -52,6 +61,11 @@ class AuthForm extends Component {
     let formCopy = this.state.form
     formCopy[name].value = value
 
+    // rules
+    let rules = formCopy[name].rules
+    let valid = ValidationRules(value, rules, formCopy)
+    formCopy[name].valid = valid
+
     this.setState({
       form: formCopy
     })
@@ -60,7 +74,7 @@ class AuthForm extends Component {
   }
 
   confirmPassword = () =>
-    this.state.type != 'Login' ? (
+    this.state.type != '로그인' ? (
       <Input
         value={this.state.form.confirmPassword.value}
         type={this.state.form.confirmPassword.type}
@@ -77,6 +91,16 @@ class AuthForm extends Component {
         <Text style={styles.errorLabel}>로그인 정보를 다시 확인해주세요.</Text>
       </View>
     ) : null
+
+  changeForm = () => {
+    const type = this.state.type
+
+    this.setState({
+      type: type === '로그인' ? '등록' : '로그인',
+      action: type === '로그인' ? '등록' : '로그인',
+      actionMode: type === '로그인' ? '로그인 화면으로' : '회원가입'
+    })
+  }
 
   render() {
     return (
@@ -109,7 +133,11 @@ class AuthForm extends Component {
           </View>
 
           <View style={styles.button}>
-            <Button title={this.state.actionMode} color="#48567f" />
+            <Button
+              title={this.state.actionMode}
+              color="#48567f"
+              onPress={this.changeForm}
+            />
           </View>
 
           <View style={styles.button}>
