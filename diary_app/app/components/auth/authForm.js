@@ -6,15 +6,22 @@
  * @flow strict-local
  */
 import React, { Component } from 'react'
-import { StyleSheet, View, Text, TextInput } from 'react-native'
+import {
+  StyleSheet,
+  View,
+  Text,
+  TextInput,
+  Button,
+  Platform
+} from 'react-native'
 import Input from '../../utils/forms/input'
 
 class AuthForm extends Component {
   state = {
-    type: 'Register',
+    type: 'Login',
     action: 'Login',
     actionMode: '새로 등록할게요.',
-    hasErrors: true,
+    hasErrors: false,
     form: {
       email: {
         value: '',
@@ -95,6 +102,24 @@ class AuthForm extends Component {
 
         {this.confirmPassword()}
         {this.formHasErrors()}
+
+        <View style={{ marginTop: 40 }}>
+          <View style={styles.button}>
+            <Button title={this.state.action} color="#48567f" />
+          </View>
+
+          <View style={styles.button}>
+            <Button title={this.state.actionMode} color="#48567f" />
+          </View>
+
+          <View style={styles.button}>
+            <Button
+              title="비회원 로그인"
+              color="#48567f"
+              onPress={() => this.props.goWithoutLogin()}
+            />
+          </View>
+        </View>
       </View>
     )
   }
@@ -113,6 +138,17 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlignVertical: 'center',
     textAlign: 'center'
+  },
+  button: {
+    ...Platform.select({
+      ios: {
+        marginTop: 15
+      },
+      android: {
+        marginTop: 15,
+        marginBottom: 10
+      }
+    })
   }
 })
 
