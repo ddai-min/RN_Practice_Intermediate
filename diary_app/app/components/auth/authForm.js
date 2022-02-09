@@ -102,6 +102,43 @@ class AuthForm extends Component {
     })
   }
 
+  submitUser = () => {
+    // Init.
+    let isFormValid = true
+    let submittedForm = {}
+    const formCopy = this.state.form
+
+    for (let key in formCopy) {
+      if (this.state.type === '로그인') {
+        if (key !== 'confirmPassword') {
+          isFormValid = isFormValid && formCopy[key].valid
+          submittedForm[key] = formCopy[key].value
+        }
+      } else {
+        isFormValid = isFormValid && formCopy[key].valid
+        submittedForm[key] = formCopy[key].value
+      }
+    }
+
+    if (isFormValid) {
+      if (this.state.type === '로그인') {
+        console.log('로그인 : ')
+        for (let key in submittedForm) {
+          console.log(submittedForm[key])
+        }
+      } else {
+        console.log('회원가입 : ')
+        for (let key in submittedForm) {
+          console.log(submittedForm[key])
+        }
+      }
+    } else {
+      this.setState({
+        hasErrors: true
+      })
+    }
+  }
+
   render() {
     return (
       <View>
@@ -129,7 +166,11 @@ class AuthForm extends Component {
 
         <View style={{ marginTop: 40 }}>
           <View style={styles.button}>
-            <Button title={this.state.action} color="#48567f" />
+            <Button
+              title={this.state.action}
+              color="#48567f"
+              onPress={this.submitUser}
+            />
           </View>
 
           <View style={styles.button}>

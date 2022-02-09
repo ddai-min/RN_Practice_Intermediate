@@ -19,7 +19,7 @@ const validation = (value, rules, form) => {
         valid =
           valid &&
           validateConfirmPassword(value, form[rules.confirmPassword].value)
-        console.log(valid)
+        // console.log(valid)
         break
       default:
         valid = true
