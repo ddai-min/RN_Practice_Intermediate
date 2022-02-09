@@ -70,7 +70,7 @@ class AuthForm extends Component {
       form: formCopy
     })
 
-    console.warn(this.state.form)
+    // console.warn(this.state.form)
   }
 
   confirmPassword = () =>
