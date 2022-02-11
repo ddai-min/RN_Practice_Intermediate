@@ -17,7 +17,6 @@ export const autoSignIn = refToken => {
     })
     .catch(err => {
       alert('에러 발생')
-      console.log(err)
       return false
     })
 
