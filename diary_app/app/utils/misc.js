@@ -19,3 +19,20 @@ export const setTokens = async (values, callBack) => {
 
   console.log('Done.')
 }
+
+export const getTokens = async () => {
+  let values
+  try {
+    values = await AsyncStorage.multiGet([
+      '@diary_app@userId',
+      '@diary_app@token',
+      '@diary_app@refToken'
+    ])
+  } catch (e) {
+    // read error
+  }
+  console.log('Get Tokens : ', values)
+
+  // example console.log output:
+  // [ ['@MyApp_user', 'myUserValue'], ['@MyApp_key', 'myKeyValue'] ]
+}
