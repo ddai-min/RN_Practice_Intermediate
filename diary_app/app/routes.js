@@ -11,6 +11,8 @@ import News from './components/news'
 import DiaryDocu from './components/diary/diaryDocu'
 import Logo from './utils/logo'
 
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+
 const AuthStack = createNativeStackNavigator()
 const MainScreenTab = createBottomTabNavigator()
 const DiaryStack = createNativeStackNavigator()
@@ -41,6 +43,20 @@ const headerConfig = {
 
 const isLoggedIn = false
 
+const TabBarIcon = (focused, name) => {
+  let iconName, iconSize
+  if (name === 'Diary') {
+    iconName = 'notebook-outline'
+  } else if (name === 'News') {
+    iconName = 'newspaper-variant-outline'
+  }
+
+  if (focused) iconSize = 37
+  else iconSize = 32
+
+  return <Icon name={iconName} size={iconSize} color="#fff" />
+}
+
 const DiaryStackComponent = () => {
   return (
     <DiaryStack.Navigator>
@@ -68,12 +84,30 @@ const NewsStackComponent = () => {
 
 const AppTabComponent = () => {
   return (
-    <MainScreenTab.Navigator screenOptions={{ headerShown: false }}>
+    <MainScreenTab.Navigator
+      initialRouteName="DiaryStack"
+      screenOptions={
+        (({ route }) => ({
+          tabBarIcon: ({ focused }) => TabBarIcon(focused, route.name)
+        }),
+        {
+          headerShown: false,
+          tabBarShowLabel: false,
+          tabBarActiveBackgroundColor: '#788DCF',
+          tabBarInactiveBackgroundColor: '#7487C5',
+          tabBarStyle: {
+            backgroundColor: '#7487C5'
+          }
+        })
+      }>
       <MainScreenTab.Screen name="DiaryStack" component={DiaryStackComponent} />
       <MainScreenTab.Screen name="NewsStack" component={NewsStackComponent} />
     </MainScreenTab.Navigator>
   )
 }
+
+// notebook-outline
+// newspaper-variant-outline
 
 export const RootNavigator = () => {
   return (
