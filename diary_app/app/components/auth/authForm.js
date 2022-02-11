@@ -20,6 +20,7 @@ import ValidationRules from '../../utils/forms/validationRules'
 import { connect } from 'react-redux'
 import { signIn, signUp } from '../../store/actions/user_actions'
 import { bindActionCreators } from 'redux'
+import { setTokens } from '../../utils/misc'
 
 class AuthForm extends Component {
   state = {
@@ -126,13 +127,28 @@ class AuthForm extends Component {
 
     if (isFormValid) {
       if (this.state.type === '로그인') {
-        this.props.signIn(submittedForm)
+        this.props.signIn(submittedForm).then(() => {
+          this.manageAccess()
+        })
       } else {
-        this.props.signUp(submittedForm)
+        this.props.signUp(submittedForm).then(() => {
+          this.manageAccess()
+        })
       }
     } else {
       this.setState({
         hasErrors: true
+      })
+    }
+  }
+
+  manageAccess = () => {
+    if (!this.props.User.auth.userId) {
+      this.setState({ hasErrors: true })
+    } else {
+      setTokens(this.props.User.auth, () => {
+        this.setState({ hasErrors: false })
+        this.props.goWithoutLogin()
       })
     }
   }
