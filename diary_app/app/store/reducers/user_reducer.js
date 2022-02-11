@@ -6,8 +6,9 @@ export default function (state = {}, action) {
       return {
         ...state,
         auth: {
-          email: action.payload.email || false,
-          token: action.payload.token || false
+          userId: action.payload.localId || false,
+          token: action.payload.idToken || false,
+          refToken: action.payload.refreshToken || false
         }
       }
     case SIGN_UP:
