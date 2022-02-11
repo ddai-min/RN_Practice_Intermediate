@@ -15,7 +15,10 @@ import {
 } from 'react-native'
 import AuthLogo from './authLogo'
 import AuthForm from './authForm'
-import { getTokens } from '../../utils/misc'
+import { getTokens, setTokens } from '../../utils/misc'
+import { autoSignIn } from '../../store/actions/user_actions'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
 class AuthComponent extends Component {
   state = {
@@ -27,7 +30,28 @@ class AuthComponent extends Component {
   }
 
   componentDidMount() {
-    getTokens()
+    /*
+    value
+      ['@diary_app@userId', 'asdfavav...']
+      ['@diary_app@token', 'qwnelaksdjf...']
+      ['@diary_app@refToken', 'Indalfknadvao...']
+    */
+    getTokens(value => {
+      if (value[1][1] === null) {
+        this.setState({ loading: false })
+      } else {
+        this.props.autoSignIn(value[2][1]).then(() => {
+          if (!this.props.User.auth.token) {
+            this.setState({ loading: false })
+          } else {
+            setTokens(this.props.User.auth, () => {
+              this.goWithoutLogin()
+            })
+          }
+        })
+      }
+      console.log('Get Tokens : ', value)
+    })
   }
 
   render() {
@@ -66,4 +90,14 @@ const styles = StyleSheet.create({
   }
 })
 
-export default AuthComponent
+function mapStateToProps(state) {
+  return {
+    User: state.User
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ autoSignIn }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AuthComponent)
