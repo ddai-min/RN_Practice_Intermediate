@@ -1,8 +1,8 @@
-import { SGIN_IN, SIGN_UP } from '../types'
+import { SIGN_IN, SIGN_UP } from '../types'
 
 export default function (state = {}, action) {
   switch (action.type) {
-    case SGIN_IN:
+    case SIGN_IN:
       return {
         ...state,
         auth: {
@@ -14,8 +14,9 @@ export default function (state = {}, action) {
       return {
         ...state,
         auth: {
-          email: action.payload.email || false,
-          token: action.payload.token || false
+          userId: action.payload.localId || false,
+          token: action.payload.idToken || false,
+          refToken: action.payload.refreshToken || false
         }
       }
     default:
