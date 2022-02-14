@@ -26,10 +26,23 @@ class DiaryComponent extends Component {
     this.props.dispatch(getDiaries())
   }
 
+  renderDiary = Diaries =>
+    Diaries.documents
+      ? Diaries.documents.map((item, index) => (
+          <TouchableOpacity key={index}>
+            <View style={styles.diaryContainer}>
+              <Text>Hello World</Text>
+            </View>
+          </TouchableOpacity>
+        ))
+      : null
+
   render() {
     return (
       <View>
-        <ScrollView style={{ backgroundColor: '#f0f0f0' }}></ScrollView>
+        <ScrollView style={{ backgroundColor: '#f0f0f0' }}>
+          {this.renderDiary(this.props.Diaries)}
+        </ScrollView>
 
         <TouchableOpacity
           style={{
@@ -53,7 +66,17 @@ class DiaryComponent extends Component {
   }
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  diaryContainer: {
+    backgroundColor: '#fff',
+    margin: 10,
+    shadowColor: '#cccccc',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    borderRadius: 2
+  }
+})
 
 function mapStateToProps(state) {
   return {
