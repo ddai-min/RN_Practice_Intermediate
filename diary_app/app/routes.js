@@ -45,9 +45,9 @@ const isLoggedIn = false
 
 const TabBarIcon = (focused, name) => {
   let iconName, iconSize
-  if (name === 'Diary') {
+  if (name === 'DiaryTab') {
     iconName = 'notebook-outline'
-  } else if (name === 'News') {
+  } else if (name === 'NewsTab') {
     iconName = 'newspaper-variant-outline'
   }
 
@@ -85,7 +85,7 @@ const NewsStackComponent = () => {
 const AppTabComponent = () => {
   return (
     <MainScreenTab.Navigator
-      initialRouteName="DiaryStack"
+      initialRouteName="DiaryTab"
       screenOptions={
         (({ route }) => ({
           tabBarIcon: ({ focused }) => TabBarIcon(focused, route.name)
@@ -100,8 +100,8 @@ const AppTabComponent = () => {
           }
         })
       }>
-      <MainScreenTab.Screen name="DiaryStack" component={DiaryStackComponent} />
-      <MainScreenTab.Screen name="NewsStack" component={NewsStackComponent} />
+      <MainScreenTab.Screen name="DiaryTab" component={DiaryStackComponent} />
+      <MainScreenTab.Screen name="NewsTab" component={NewsStackComponent} />
     </MainScreenTab.Navigator>
   )
 }

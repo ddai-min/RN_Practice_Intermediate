@@ -31,7 +31,27 @@ class DiaryComponent extends Component {
       ? Diaries.documents.map((item, index) => (
           <TouchableOpacity key={index}>
             <View style={styles.diaryContainer}>
-              <Text>Hello World</Text>
+              <View style={{ height: 160 }}>
+                {item.data.imagePath ? (
+                  <View style={styles.indexView}>
+                    <Text style={{ fontSize: 17, fontWeight: 'bold' }}>
+                      # {index + 1}
+                    </Text>
+
+                    <Image
+                      source={require('../../assets/images/image.png')}
+                      resizeMode={'contain'}
+                      style={{ width: 20, height: 20 }}
+                    />
+                  </View>
+                ) : (
+                  <View style={{ paddingTop: 7, paddingLeft: 7 }}>
+                    <Text style={{ fontSize: 17, fontWeight: 'bold' }}>
+                      # {index + 1}
+                    </Text>
+                  </View>
+                )}
+              </View>
             </View>
           </TouchableOpacity>
         ))
@@ -75,6 +95,14 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.8,
     shadowRadius: 2,
     borderRadius: 2
+  },
+  indexView: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingTop: 7,
+    paddingLeft: 7,
+    paddingRight: 12,
+    alignItems: 'center'
   }
 })
 
