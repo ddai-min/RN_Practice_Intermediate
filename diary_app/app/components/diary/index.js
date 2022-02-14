@@ -7,8 +7,14 @@
  */
 import React, { Component } from 'react'
 import { StyleSheet, View, Text } from 'react-native'
+import { connect } from 'react-redux'
+import { getDiaries } from '../../store/actions/diary_actions'
 
 class DiaryComponent extends Component {
+  componentDidMount() {
+    this.props.dispatch(getDiaries())
+  }
+
   render() {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -20,4 +26,10 @@ class DiaryComponent extends Component {
 
 const styles = StyleSheet.create({})
 
-export default DiaryComponent
+function mapStateToProps(state) {
+  return {
+    Diaries: state.Diaries
+  }
+}
+
+export default connect(mapStateToProps)(DiaryComponent)

@@ -4,8 +4,8 @@ export default function (state = {}, action) {
   switch (action.type) {
     case GET_DIARIES:
       return {
-        ...state
-        // other state elements
+        ...state,
+        documents: action.payload || false
       }
     default:
       return state
