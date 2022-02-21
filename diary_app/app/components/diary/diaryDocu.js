@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 import React, { Component } from 'react'
-import { StyleSheet, View, Text } from 'react-native'
+import { StyleSheet, View, Text, TextInput } from 'react-native'
 
 class DiaryDocu extends Component {
   constructor(props) {
@@ -39,6 +39,24 @@ class DiaryDocu extends Component {
     // console.warn(this.state)
   }
 
+  onChangeInput = (item, value) => {
+    if (item === 'date') {
+      this.setState(prevState => ({
+        diaryData: {
+          ...prevState.diaryData,
+          date: value
+        }
+      }))
+    } else if (item === 'title') {
+      this.setState(prevState => ({
+        diaryData: {
+          ...prevState.diaryData,
+          title: value
+        }
+      }))
+    }
+  }
+
   render() {
     return (
       <View style={styles.diaryContainer}>
@@ -46,12 +64,58 @@ class DiaryDocu extends Component {
           <Text style={styles.indexText}># {this.state.index + 1}</Text>
         </View>
 
-        <View style={{ flex: 1, borderWidth: 0.5 }}>
-          <Text>Date</Text>
+        <View style={styles.dateView}>
+          <Text style={styles.dateText}>Date :{'  '}</Text>
+          <View style={styles.dateInputView}>
+            {this.state.newDiary ? (
+              <TextInput
+                value={this.state.diaryData.date}
+                style={{ fontSize: 20, paddingTop: 0, paddingBottom: 0 }}
+                placeholder="날짜"
+                placeholderTextColor="#777"
+                onChangeText={value => this.onChangeInput('date', value)}
+                editable={true}
+              />
+            ) : (
+              <TextInput
+                value={this.state.diaryData.date}
+                style={{
+                  fontSize: 20,
+                  paddingTop: 0,
+                  paddingBottom: 0,
+                  color: 'gray'
+                }}
+                editable={false}
+              />
+            )}
+          </View>
         </View>
 
-        <View style={{ flex: 1, borderWidth: 0.5 }}>
-          <Text>Title</Text>
+        <View style={styles.dateView}>
+          <Text style={styles.dateText}>Title :{'  '}</Text>
+          <View style={styles.dateInputView}>
+            {this.state.newDiary ? (
+              <TextInput
+                value={this.state.diaryData.title}
+                style={{ fontSize: 20, paddingTop: 0, paddingBottom: 0 }}
+                placeholder="제목"
+                placeholderTextColor="#777"
+                onChangeText={value => this.onChangeInput('title', value)}
+                editable={true}
+              />
+            ) : (
+              <TextInput
+                value={this.state.diaryData.title}
+                style={{
+                  fontSize: 20,
+                  paddingTop: 0,
+                  paddingBottom: 0,
+                  color: 'gray'
+                }}
+                editable={false}
+              />
+            )}
+          </View>
         </View>
 
         <View style={{ flex: 7, borderWidth: 0.5 }}>
@@ -84,6 +148,26 @@ const styles = StyleSheet.create({
   indexText: {
     fontSize: 23,
     fontWeight: 'bold'
+  },
+  dateView: {
+    flex: 1,
+    paddingLeft: 15,
+    paddingRight: 15,
+    flexDirection: 'row',
+    alignItems: 'baseline'
+  },
+  dateText: {
+    fontSize: 22,
+    fontWeight: 'bold'
+  },
+  dateInputView: {
+    flex: 1,
+    paddingLeft: 15,
+    paddingRight: 15,
+    paddingTop: 3,
+    paddingBottom: 3,
+    borderWidth: 1,
+    borderRadius: 1
   }
 })
 
