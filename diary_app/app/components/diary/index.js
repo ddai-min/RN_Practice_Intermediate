@@ -17,6 +17,7 @@ import {
 } from 'react-native'
 import { connect } from 'react-redux'
 import { getDiaries } from '../../store/actions/diary_actions'
+import TextTruncate from 'react-native-text-truncate'
 
 const screenHeight = Dimensions.get('window').height
 const screenWidth = Dimensions.get('window').width
@@ -51,6 +52,35 @@ class DiaryComponent extends Component {
                     </Text>
                   </View>
                 )}
+
+                {item.data.date ? (
+                  <View style={styles.dateView}>
+                    <Text style={{ fontSize: 16, fontWeight: 'bold' }}>
+                      Date :{'  '}
+                    </Text>
+                    <Text style={{ fontSize: 16 }}>{item.data.date}</Text>
+                  </View>
+                ) : null}
+
+                {item.data.title ? (
+                  <View style={styles.dateView}>
+                    <Text style={{ fontSize: 16, fontWeight: 'bold' }}>
+                      Title :{'  '}
+                    </Text>
+                    <Text style={{ fontSize: 16 }}>{item.data.title}</Text>
+                  </View>
+                ) : null}
+
+                {item.data.description ? (
+                  <View style={{ paddingTop: 7, paddingLeft: 7 }}>
+                    <Text style={{ fontSize: 16, fontWeight: 'bold' }}>
+                      Description :{'  '}
+                    </Text>
+                    <TextTruncate style={{ fontSize: 16 }} numberOfLines={2}>
+                      {item.data.description}
+                    </TextTruncate>
+                  </View>
+                ) : null}
               </View>
             </View>
           </TouchableOpacity>
@@ -103,6 +133,12 @@ const styles = StyleSheet.create({
     paddingLeft: 7,
     paddingRight: 12,
     alignItems: 'center'
+  },
+  dateView: {
+    flexDirection: 'row',
+    alignItems: 'baseline',
+    paddingTop: 7,
+    paddingLeft: 7
   }
 })
 
