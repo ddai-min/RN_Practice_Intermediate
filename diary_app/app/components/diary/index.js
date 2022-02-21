@@ -30,7 +30,16 @@ class DiaryComponent extends Component {
   renderDiary = Diaries =>
     Diaries.documents
       ? Diaries.documents.map((item, index) => (
-          <TouchableOpacity key={index}>
+          <TouchableOpacity
+            key={index}
+            onPress={() => {
+              this.props.navigation.navigate('DiaryDocu', {
+                newDiary: false,
+                diaryData: item,
+                index: index,
+                id: item.data.id
+              })
+            }}>
             <View style={styles.diaryContainer}>
               <View style={{ height: 160 }}>
                 {item.data.imagePath ? (
