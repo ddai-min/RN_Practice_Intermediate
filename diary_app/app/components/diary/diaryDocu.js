@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 import React, { Component } from 'react'
-import { StyleSheet, View, Text, TextInput } from 'react-native'
+import { StyleSheet, View, Text, TextInput, ScrollView } from 'react-native'
 
 class DiaryDocu extends Component {
   constructor(props) {
@@ -52,6 +52,13 @@ class DiaryDocu extends Component {
         diaryData: {
           ...prevState.diaryData,
           title: value
+        }
+      }))
+    } else if (item === 'description') {
+      this.setState(prevState => ({
+        diaryData: {
+          ...prevState.diaryData,
+          description: value
         }
       }))
     }
@@ -118,8 +125,37 @@ class DiaryDocu extends Component {
           </View>
         </View>
 
-        <View style={{ flex: 7, borderWidth: 0.5 }}>
-          <Text>Description</Text>
+        <View style={styles.descriptionView}>
+          <Text style={styles.dateText}>Description :{'  '}</Text>
+          <View style={[styles.dateInputView, styles.descriptionInputView]}>
+            <ScrollView>
+              {this.state.newDiary ? (
+                <TextInput
+                  value={this.state.diaryData.description}
+                  style={{ fontSize: 20, paddingTop: 0, paddingBottom: 0 }}
+                  placeholder="내용"
+                  placeholderTextColor="#777"
+                  onChangeText={value =>
+                    this.onChangeInput('description', value)
+                  }
+                  editable={true}
+                  multiline={true}
+                />
+              ) : (
+                <TextInput
+                  value={this.state.diaryData.description}
+                  style={{
+                    fontSize: 20,
+                    paddingTop: 0,
+                    paddingBottom: 0,
+                    color: 'gray'
+                  }}
+                  editable={false}
+                  multiline={true}
+                />
+              )}
+            </ScrollView>
+          </View>
         </View>
 
         <View style={{ flex: 4, borderWidth: 0.5 }}>
@@ -168,6 +204,15 @@ const styles = StyleSheet.create({
     paddingBottom: 3,
     borderWidth: 1,
     borderRadius: 1
+  },
+  descriptionView: {
+    flex: 7,
+    paddingLeft: 15,
+    paddingRight: 15
+  },
+  descriptionInputView: {
+    flex: 0.95,
+    marginTop: 5
   }
 })
 
