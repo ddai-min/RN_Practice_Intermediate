@@ -96,6 +96,18 @@ class DiaryComponent extends Component {
         ))
       : null
 
+  checkNextID = Diaries => {
+    if (Diaries.documents.length > 0) {
+      let numOfArrElements = Diaries.documents.length
+      let lastDiaryIdx = Number(numOfArrElements) - 1
+      let nextDiaryID = Diaries.documents[lastDiaryIdx].data.id + 1
+
+      return nextDiaryID
+    } else {
+      return 0
+    }
+  }
+
   render() {
     return (
       <View>
@@ -111,7 +123,9 @@ class DiaryComponent extends Component {
           }}
           onPress={() => {
             this.props.navigation.navigate('DiaryDocu', {
-              newDiary: true
+              newDiary: true,
+              index: this.props.Diaries.documents.length,
+              id: this.checkNextID(this.props.Diaries)
             })
           }}>
           <Image
