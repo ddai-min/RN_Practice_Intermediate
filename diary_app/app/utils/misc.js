@@ -4,6 +4,24 @@ export const SIGNIN = `https://identitytoolkit.googleapis.com/v1/accounts:signIn
 export const REFRESH = `https://securetoken.googleapis.com/v1/token?key=${APIKEY}`
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
+import firebase from 'firebase'
+
+const firebaseConfig = {
+  apiKey: 'AIzaSyBNHSCgrM72KSDni-eNQtynKtlaJWurXZw',
+  authDomain: 'rn-diary-app-e6479.firebaseapp.com',
+  databaseURL:
+    'https://rn-diary-app-e6479-default-rtdb.asia-southeast1.firebasedatabase.app',
+  projectId: 'rn-diary-app-e6479',
+  storageBucket: 'rn-diary-app-e6479.appspot.com',
+  messagingSenderId: '1017993562356',
+  appId: '1:1017993562356:web:11fc0b5e467c35d51276a1'
+}
+
+firebase.initializeApp(firebaseConfig)
+
+export const storage = firebase.storage()
+export const database = firebase.database()
+
 export const setTokens = async (values, callBack) => {
   const firstPair = ['@diary_app@userId', values.userId]
   const secondPair = ['@diary_app@token', values.token]
