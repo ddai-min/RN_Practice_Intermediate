@@ -12,9 +12,11 @@ import {
   Text,
   TextInput,
   ScrollView,
-  Image
+  Image,
+  TouchableOpacity
 } from 'react-native'
 import { storage, database } from '../../utils/misc'
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker'
 
 class DiaryDocu extends Component {
   constructor(props) {
@@ -85,6 +87,23 @@ class DiaryDocu extends Component {
           image: url
         })
       })
+  }
+
+  selectImage = () => {
+    launchImageLibrary({}, response => {
+      this.setState({
+        image: response.uri
+      })
+    })
+
+    let imageDir = `index${this.state.diaryData.id}`
+
+    this.setState(prevState => ({
+      diaryData: {
+        ...prevState.diaryData,
+        imagePath: imageDir
+      }
+    }))
   }
 
   render() {
@@ -195,7 +214,23 @@ class DiaryDocu extends Component {
             </View>
           </View>
 
-          <View style={{ flex: 1, paddingTop: 30, paddingRight: 10 }}></View>
+          <View style={{ flex: 1, paddingTop: 30, paddingRight: 10 }}>
+            {this.state.newDiary ? (
+              <TouchableOpacity onPress={() => this.selectImage()}>
+                <Image
+                  source={require('../../assets/images/image.png')}
+                  resizeMode="contain"
+                  style={{ width: 30, height: 30 }}
+                />
+              </TouchableOpacity>
+            ) : (
+              <Image
+                source={require('../../assets/images/image.png')}
+                resizeMode="contain"
+                style={{ width: 30, height: 30, opacity: 0.2 }}
+              />
+            )}
+          </View>
         </View>
 
         <View style={{ flex: 1.5, borderWidth: 0.5 }}>
