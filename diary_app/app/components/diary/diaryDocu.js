@@ -40,7 +40,8 @@ class DiaryDocu extends Component {
             description: params.diaryData.data.description,
             imagePath: params.diaryData.data.imagePath
           },
-          image: ''
+          image: '',
+          userId: params.userId
         })
       : (this.state = {
           newDiary: true,
@@ -52,7 +53,8 @@ class DiaryDocu extends Component {
             title: '',
             description: '',
             imagePath: ''
-          }
+          },
+          userId: params.userId
         })
     // console.warn(this.state)
 
@@ -87,7 +89,7 @@ class DiaryDocu extends Component {
   getImage = () => {
     storage
       .ref('diaryImage')
-      .child(`index${this.state.diaryData.id}/image.jpg`)
+      .child(`${this.state.userId}/${this.state.diaryData.imagePath}/image.jpg`)
       .getDownloadURL()
       .then(url => {
         this.setState({
