@@ -113,9 +113,37 @@ class DiaryDocu extends Component {
     }))
   }
 
-  deleteData = () => {}
+  deleteData = async () => {
+    const id = this.state.diaryData.id
 
-  updateData = () => {}
+    const databaseDirectory = `diary/${id}`
+    const databaseRef = database.ref(databaseDirectory).child('data')
+
+    const storageDirectory = `diaryImage/index${id}`
+    const storageRef = storage.ref(storageDirectory).child('image.jpg')
+
+    try {
+      await databaseRef.remove()
+      await storageRef
+        .getDownloadURL()
+        .then(() => {
+          storageRef.delete().then(() => {
+            this.props.navigation.push('Diary')
+          })
+        })
+        .catch(() => {
+          this.props.navigation.push('Diary')
+        })
+    } catch (err) {
+      alert('삭제 실패 : ' + err.message)
+    }
+  }
+
+  updateData = () => {
+    this.setState({
+      newDiary: true
+    })
+  }
 
   createData = async () => {
     this.setState({
