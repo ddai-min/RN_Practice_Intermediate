@@ -91,6 +91,7 @@ const AppTabComponent = () => {
           tabBarIcon: ({ focused }) => TabBarIcon(focused, route.name)
         }),
         {
+          tabBarHideOnKeyboard: true,
           headerShown: false,
           tabBarShowLabel: false,
           tabBarActiveBackgroundColor: '#788DCF',
