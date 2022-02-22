@@ -86,21 +86,17 @@ const AppTabComponent = () => {
   return (
     <MainScreenTab.Navigator
       initialRouteName="DiaryTab"
-      screenOptions={
-        (({ route }) => ({
-          tabBarIcon: ({ focused }) => TabBarIcon(focused, route.name)
-        }),
-        {
-          tabBarHideOnKeyboard: true,
-          headerShown: false,
-          tabBarShowLabel: false,
-          tabBarActiveBackgroundColor: '#788DCF',
-          tabBarInactiveBackgroundColor: '#7487C5',
-          tabBarStyle: {
-            backgroundColor: '#7487C5'
-          }
-        })
-      }>
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused }) => TabBarIcon(focused, route.name),
+        tabBarHideOnKeyboard: true,
+        headerShown: false,
+        tabBarShowLabel: false,
+        tabBarActiveBackgroundColor: '#788DCF',
+        tabBarInactiveBackgroundColor: '#7487C5',
+        tabBarStyle: {
+          backgroundColor: '#7487C5'
+        }
+      })}>
       <MainScreenTab.Screen name="DiaryTab" component={DiaryStackComponent} />
       <MainScreenTab.Screen name="NewsTab" component={NewsStackComponent} />
     </MainScreenTab.Navigator>

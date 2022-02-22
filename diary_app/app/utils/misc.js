@@ -21,6 +21,7 @@ firebase.initializeApp(firebaseConfig)
 
 export const storage = firebase.storage()
 export const database = firebase.database()
+export const auth = firebase.auth()
 
 export const setTokens = async (values, callBack) => {
   const firstPair = ['@diary_app@userId', values.userId]

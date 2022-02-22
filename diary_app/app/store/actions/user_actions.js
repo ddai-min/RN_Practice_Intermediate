@@ -1,7 +1,7 @@
 import { SIGN_IN, SIGN_UP, AUTO_SIGN_IN } from '../types'
 
 import axios from 'axios'
-import { SIGNUP, SIGNIN, REFRESH } from '../../utils/misc'
+import { SIGNUP, SIGNIN, REFRESH, auth } from '../../utils/misc'
 
 export const autoSignIn = refToken => {
   const request = axios({
@@ -26,7 +26,18 @@ export const autoSignIn = refToken => {
   }
 }
 
+const firebaseLogin = async (email, password) => {
+  try {
+    let user = await auth.signInWithEmailAndPassword(email, password)
+    console.warn('user : ', user)
+  } catch (err) {
+    console.warn('error : ', err)
+  }
+}
+
 export function signIn(data) {
+  firebaseLogin(data.email, data.password)
+
   const request = axios({
     method: 'POST',
     url: SIGNIN,
