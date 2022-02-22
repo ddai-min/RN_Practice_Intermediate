@@ -112,7 +112,9 @@ class DiaryComponent extends Component {
     return (
       <View>
         <ScrollView style={{ backgroundColor: '#f0f0f0' }}>
-          {this.renderDiary(this.props.Diaries)}
+          <View style={{ flexDirection: 'column-reverse' }}>
+            {this.renderDiary(this.props.Diaries)}
+          </View>
         </ScrollView>
 
         <TouchableOpacity

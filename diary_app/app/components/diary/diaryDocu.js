@@ -21,6 +21,7 @@ import {
 } from 'react-native'
 import { storage, database } from '../../utils/misc'
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker'
+import Spinner from 'react-native-loading-spinner-overlay'
 
 class DiaryDocu extends Component {
   constructor(props) {
@@ -329,6 +330,13 @@ class DiaryDocu extends Component {
                 </TouchableOpacity>
               </View>
             </View>
+
+            <Spinner
+              visible={this.state.isLoading}
+              textContent={'다이어리 업로드 중...'}
+              overlayColor={'rgba(0,0,0,0.6)'}
+              textStyle={{ color: '#fff' }}
+            />
           </View>
         </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
