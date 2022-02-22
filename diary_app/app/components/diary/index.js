@@ -33,7 +33,7 @@ class DiaryComponent extends Component {
           <TouchableOpacity
             key={index}
             onPress={() => {
-              this.props.navigation.navigate('DiaryDocu', {
+              this.props.navigation.push('DiaryDocu', {
                 newDiary: false,
                 diaryData: item,
                 index: index,
@@ -122,7 +122,7 @@ class DiaryComponent extends Component {
             top: screenHeight * 0.7
           }}
           onPress={() => {
-            this.props.navigation.navigate('DiaryDocu', {
+            this.props.navigation.push('DiaryDocu', {
               newDiary: true,
               index: this.props.Diaries.documents.length,
               id: this.checkNextID(this.props.Diaries)

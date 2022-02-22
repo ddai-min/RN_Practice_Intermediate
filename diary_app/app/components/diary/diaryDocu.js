@@ -30,6 +30,7 @@ class DiaryDocu extends Component {
     !params.newDiary
       ? (this.state = {
           newDiary: false,
+          isLoading: false,
           index: params.index,
           diaryData: {
             id: params.diaryData.data.id,
@@ -42,6 +43,7 @@ class DiaryDocu extends Component {
         })
       : (this.state = {
           newDiary: true,
+          isLoading: false,
           index: params.index,
           diaryData: {
             id: params.id,
@@ -100,7 +102,7 @@ class DiaryDocu extends Component {
       })
     })
 
-    let imageDir = `index${this.state.diaryData.id}`
+    let imageDir = `diaryImage/index${this.state.diaryData.id}`
 
     this.setState(prevState => ({
       diaryData: {
@@ -114,7 +116,57 @@ class DiaryDocu extends Component {
 
   updateData = () => {}
 
-  createData = () => {}
+  createData = async () => {
+    this.setState({
+      isLoading: true
+    })
+
+    const data = this.state.diaryData
+    const id = data.id
+
+    const databaseDirectory = `diary/${id}`
+    const databaseRef = database.ref(databaseDirectory)
+    const storageDirectory = `diaryImage/index${id}/image.jpg`
+
+    try {
+      await databaseRef.set({ data })
+      this.uploadImage(storageDirectory)
+    } catch (err) {
+      this.setState({
+        isLoading: false
+      })
+      alert('저장 실패 : ' + err.message)
+    }
+  }
+
+  uploadImage = async imgDir => {
+    if (this.state.image) {
+      const response = await fetch(this.state.image)
+      const blob = await response.blob()
+
+      try {
+        await storage
+          .ref(imgDir)
+          .put(blob)
+          .then(() => {
+            this.setState({
+              isLoading: false
+            })
+            this.props.navigation.push('Diary')
+          })
+      } catch (err) {
+        this.setState({
+          isLoading: false
+        })
+        alert('저장 실패 : ' + err.message)
+      }
+    } else {
+      this.setState({
+        isLoading: false
+      })
+      this.props.navigation.push('Diary')
+    }
+  }
 
   render() {
     return (
