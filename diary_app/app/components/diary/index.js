@@ -139,6 +139,7 @@ class DiaryComponent extends Component {
   }
 
   render() {
+    console.warn('diaries... ', this.props.Diaries)
     return (
       <View>
         {this.state.isAuth ? (

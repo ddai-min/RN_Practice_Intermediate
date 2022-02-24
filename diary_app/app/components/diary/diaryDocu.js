@@ -105,7 +105,7 @@ class DiaryDocu extends Component {
       })
     })
 
-    let imageDir = `diaryImage/index${this.state.diaryData.id}`
+    let imageDir = `index${this.state.diaryData.id}`
 
     this.setState(prevState => ({
       diaryData: {
@@ -117,11 +117,12 @@ class DiaryDocu extends Component {
 
   deleteData = async () => {
     const id = this.state.diaryData.id
+    const userId = this.state.userId
 
-    const databaseDirectory = `diary/${id}`
+    const databaseDirectory = `diary/${userId}/${id}`
     const databaseRef = database.ref(databaseDirectory).child('data')
 
-    const storageDirectory = `diaryImage/index${id}`
+    const storageDirectory = `diaryImage/${userId}/index${id}`
     const storageRef = storage.ref(storageDirectory).child('image.jpg')
 
     try {
@@ -152,12 +153,13 @@ class DiaryDocu extends Component {
       isLoading: true
     })
 
+    const userId = this.state.userId
     const data = this.state.diaryData
     const id = data.id
 
-    const databaseDirectory = `diary/${id}`
+    const databaseDirectory = `diary/${userId}/${id}`
     const databaseRef = database.ref(databaseDirectory)
-    const storageDirectory = `diaryImage/index${id}/image.jpg`
+    const storageDirectory = `diaryImage/${userId}/index${id}/image.jpg`
 
     try {
       await databaseRef.set({ data })
