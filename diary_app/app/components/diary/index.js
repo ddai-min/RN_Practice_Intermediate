@@ -22,7 +22,7 @@ import { getDiaries } from '../../store/actions/diary_actions'
 import TextTruncate from 'react-native-text-truncate'
 import { autoSignIn } from '../../store/actions/user_actions'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import { getTokens, setTokens } from '../../utils/misc'
+import { getTokens, setTokens, auth, removeTokens } from '../../utils/misc'
 
 const screenHeight = Dimensions.get('window').height
 const screenWidth = Dimensions.get('window').width
@@ -143,8 +143,35 @@ class DiaryComponent extends Component {
     }
   }
 
+  headerStyle = () => {
+    this.props.navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity
+          style={{ flexDirection: 'row' }}
+          onPress={() => {
+            auth
+              .signOut()
+              .then(() => {
+                removeTokens(() => {
+                  this.props.navigation.navigate('SignIn')
+                })
+              })
+              .catch(err => {
+                alert('Logout Failed!!', err.message)
+              })
+          }}>
+          <Image
+            source={require('../../assets/images/logout.png')}
+            resizeMode="contain"
+            style={{ width: 23, height: 23 }}
+          />
+        </TouchableOpacity>
+      )
+    })
+  }
+
   render() {
-    console.warn('diaries... ', this.props.Diaries)
+    this.headerStyle()
     return (
       <View>
         {this.state.isAuth ? (
