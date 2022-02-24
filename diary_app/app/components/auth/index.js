@@ -21,10 +21,6 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 class AuthComponent extends Component {
-  state = {
-    loading: false
-  }
-
   goWithoutLogin = () => {
     this.props.navigation.navigate('AppTabComponent')
   }
@@ -37,40 +33,27 @@ class AuthComponent extends Component {
       ['@diary_app@refToken', 'Indalfknadvao...']
     */
     getTokens(value => {
-      if (value[1][1] === null) {
-        this.setState({ loading: false })
-      } else {
+      if (value[1][1] !== null) {
         this.props.autoSignIn(value[2][1]).then(() => {
-          if (!this.props.User.auth.token) {
-            this.setState({ loading: false })
-          } else {
+          if (this.props.User.auth.token) {
             setTokens(this.props.User.auth, () => {
               this.goWithoutLogin()
             })
           }
         })
       }
-      console.log('Get Tokens : ', value)
     })
   }
 
   render() {
-    if (this.state.loading) {
-      return (
-        <View style={styles.loading}>
-          <ActivityIndicator />
+    return (
+      <ScrollView style={styles.container}>
+        <View>
+          <AuthLogo />
+          <AuthForm goWithoutLogin={this.goWithoutLogin} />
         </View>
-      )
-    } else {
-      return (
-        <ScrollView style={styles.container}>
-          <View>
-            <AuthLogo />
-            <AuthForm goWithoutLogin={this.goWithoutLogin} />
-          </View>
-        </ScrollView>
-      )
-    }
+      </ScrollView>
+    )
   }
 }
 

@@ -10,6 +10,7 @@ import News from './components/news'
 
 import DiaryDocu from './components/diary/diaryDocu'
 import Logo from './utils/logo'
+import Loading from './components/auth/loading'
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
@@ -40,8 +41,6 @@ const headerConfig = {
             - Tab Screen B
             - Tab Screen C
 */
-
-const isLoggedIn = false
 
 const TabBarIcon = (focused, name) => {
   let iconName, iconSize
@@ -109,17 +108,9 @@ const AppTabComponent = () => {
 export const RootNavigator = () => {
   return (
     <AuthStack.Navigator screenOptions={{ headerShown: false }}>
-      {isLoggedIn ? (
-        <AuthStack.Screen name="Main" component={AppTabComponent} />
-      ) : (
-        <>
-          <AuthStack.Screen name="SignIn" component={SignIn} />
-          <AuthStack.Screen
-            name="AppTabComponent"
-            component={AppTabComponent}
-          />
-        </>
-      )}
+      <AuthStack.Screen name="Loading" component={Loading} />
+      <AuthStack.Screen name="SignIn" component={SignIn} />
+      <AuthStack.Screen name="AppTabComponent" component={AppTabComponent} />
     </AuthStack.Navigator>
   )
 }
