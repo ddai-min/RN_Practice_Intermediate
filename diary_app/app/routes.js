@@ -32,6 +32,20 @@ const headerConfig = {
   }
 }
 
+const headerConfig_ = {
+  headerTitleAlign: 'center',
+  headerTintColor: '#fff',
+  headerStyle: {
+    backgroundColor: '#7487C5'
+  },
+  headerTitle: <Logo />,
+  headerTitleStyle: {
+    flex: 1,
+    textAlign: 'center'
+  },
+  headerLeft: null
+}
+
 /*
     Stack Navigator
         - Stack Screen A
@@ -62,7 +76,7 @@ const DiaryStackComponent = () => {
       <DiaryStack.Screen
         name="Diary"
         component={Diary}
-        options={headerConfig}
+        options={headerConfig_}
       />
       <DiaryStack.Screen
         name="DiaryDocu"
@@ -76,7 +90,7 @@ const DiaryStackComponent = () => {
 const NewsStackComponent = () => {
   return (
     <NewsStack.Navigator>
-      <NewsStack.Screen name="News" component={News} options={headerConfig} />
+      <NewsStack.Screen name="News" component={News} options={headerConfig_} />
     </NewsStack.Navigator>
   )
 }
@@ -109,8 +123,16 @@ export const RootNavigator = () => {
   return (
     <AuthStack.Navigator screenOptions={{ headerShown: false }}>
       <AuthStack.Screen name="Loading" component={Loading} />
-      <AuthStack.Screen name="SignIn" component={SignIn} />
-      <AuthStack.Screen name="AppTabComponent" component={AppTabComponent} />
+      <AuthStack.Screen
+        name="SignIn"
+        component={SignIn}
+        options={() => ({ gestureEnabled: false })}
+      />
+      <AuthStack.Screen
+        name="AppTabComponent"
+        component={AppTabComponent}
+        options={() => ({ gestureEnabled: false })}
+      />
     </AuthStack.Navigator>
   )
 }

@@ -14,7 +14,8 @@ import {
   Image,
   TouchableOpacity,
   Dimensions,
-  Button
+  Button,
+  BackHandler
 } from 'react-native'
 import { connect } from 'react-redux'
 import { getDiaries } from '../../store/actions/diary_actions'
@@ -53,6 +54,10 @@ class DiaryComponent extends Component {
           }
         })
       }
+    })
+
+    BackHandler.addEventListener('hardwareBackPress', () => {
+      return true
     })
   }
 

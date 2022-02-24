@@ -43,6 +43,10 @@ class AuthComponent extends Component {
         })
       }
     })
+
+    this.props.navigation.addListener('beforeRemove', e => {
+      e.preventDefault()
+    })
   }
 
   render() {
