@@ -99,19 +99,62 @@ class NewsComponent extends Component {
 
           <View>
             <View>
-              <Image />
+              <Image
+                source={require('../../assets/images/very_good.png')}
+                style={{ width: 60, height: 60 }}
+                resizeMode="contain"
+              />
             </View>
 
             <View>
-              <Text></Text>
+              <Text>좋음</Text>
             </View>
           </View>
 
-          <View></View>
+          <View>
+            <View>
+              <Text>미세먼지</Text>
+            </View>
 
-          <View></View>
+            <View>
+              <Text>좋음</Text>
+            </View>
 
-          <View></View>
+            <View>
+              <Text>30 </Text>
+              <Text>μg/m3</Text>
+            </View>
+          </View>
+
+          <View>
+            <View>
+              <Text>초미세먼지</Text>
+            </View>
+
+            <View>
+              <Text>좋음</Text>
+            </View>
+
+            <View>
+              <Text>15 </Text>
+              <Text>μg/m3</Text>
+            </View>
+          </View>
+
+          <View>
+            <View>
+              <Text>이산화질소</Text>
+            </View>
+
+            <View>
+              <Text>좋음</Text>
+            </View>
+
+            <View>
+              <Text>0.027 </Text>
+              <Text>ppm</Text>
+            </View>
+          </View>
         </View>
       </View>
     )
