@@ -44,6 +44,84 @@ class NewsComponent extends Component {
     }).then(response => {
       this.makeCovidData(response.data)
     })
+
+    const fineDust = ['PM10', 'PM25', 'NO2']
+
+    for (const item of fineDust) {
+      const requestDust = axios({
+        method: 'GET',
+        url: `http://apis.data.go.kr/B552584/ArpltnStatsSvc/getCtprvnMesureLIst?itemCode=${item}&dataGubun=HOUR&pageNo=1&numOfRows=100&returnType=json&serviceKey=SL%2F9mRlGvCNOkjtzP2xB3oddIVzVqnMIIG9Vi7kPGFkbM2IzMfCzsABRFGfTyM4OkPbsGOgA4a5WwSfiIDIN%2BA%3D%3D`
+      }).then(response => {
+        this.makeDustData(item, response.data)
+      })
+    }
+  }
+
+  makeDustData = (item, data) => {
+    let dustData
+    let value, level
+
+    for (let key in data) dustData = data[key]
+    // console.log('dustData : ', dustData)
+
+    value = dustData.body.items[0].seoul
+
+    if (item === 'PM10') {
+      if (value <= 30) {
+        level = '좋음'
+      } else if (value > 30 && value <= 50) {
+        level = '보통'
+      } else if (value > 50 && value <= 100) {
+        level = '나쁨'
+      } else if (value > 100) {
+        level = '매우 나쁨'
+      }
+
+      this.setState(prevData => ({
+        dust: {
+          ...prevData.dust,
+          dateTime: dustData.body.items[0].dataTime,
+          fineDust: value,
+          fineDustLevel: level
+        }
+      }))
+    } else if (item === 'PM25') {
+      if (value <= 15) {
+        level = '좋음'
+      } else if (value > 15 && value <= 25) {
+        level = '보통'
+      } else if (value > 25 && value <= 50) {
+        level = '나쁨'
+      } else if (value > 50) {
+        level = '매우 나쁨'
+      }
+
+      this.setState(prevData => ({
+        dust: {
+          ...prevData.dust,
+          ultraFineDust: value,
+          ultraFineDustLevel: level
+        }
+      }))
+    } else if (item === 'NO2') {
+      if (value <= 0.03) {
+        level = '좋음'
+      } else if (value > 0.03 && value <= 0.06) {
+        level = '보통'
+      } else if (value > 0.06 && value <= 0.2) {
+        level = '나쁨'
+      } else if (value > 0.2) {
+        level = '매우 나쁨'
+      }
+
+      this.setState(prevData => ({
+        dust: {
+          ...prevData.dust,
+          nitrogenDioxide: value,
+          nitrogenDioxideLevel: level
+        }
+      }))
+    }
   }
 
   makeCovidData = data => {
