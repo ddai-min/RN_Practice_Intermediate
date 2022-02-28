@@ -58,9 +58,9 @@ const headerConfig_ = {
 
 const TabBarIcon = (focused, name) => {
   let iconName, iconSize
-  if (name === 'Diary') {
+  if (name === 'DiaryTab') {
     iconName = 'notebook-outline'
-  } else if (name === 'News') {
+  } else if (name === 'NewsTab') {
     iconName = 'newspaper-variant-outline'
   }
 
@@ -98,7 +98,7 @@ const NewsStackComponent = () => {
 const AppTabComponent = () => {
   return (
     <MainScreenTab.Navigator
-      initialRouteName="Diary"
+      initialRouteName="DiaryTab"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused }) => TabBarIcon(focused, route.name),
         tabBarHideOnKeyboard: true,
@@ -110,8 +110,8 @@ const AppTabComponent = () => {
           backgroundColor: '#7487C5'
         }
       })}>
-      <MainScreenTab.Screen name="Diary" component={DiaryStackComponent} />
-      <MainScreenTab.Screen name="News" component={NewsStackComponent} />
+      <MainScreenTab.Screen name="DiaryTab" component={DiaryStackComponent} />
+      <MainScreenTab.Screen name="NewsTab" component={NewsStackComponent} />
     </MainScreenTab.Navigator>
   )
 }
