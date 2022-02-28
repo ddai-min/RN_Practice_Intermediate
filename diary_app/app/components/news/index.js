@@ -46,6 +46,45 @@ class NewsComponent extends Component {
     })
   }
 
+  makeCovidData = data => {
+    let covidData
+    for (let key in data) {
+      covidData = data[key]
+      // console.log('covidData : ', covidData)
+    }
+
+    let prevData = covidData.body.items.item[1]
+    let currData = covidData.body.items.item[0]
+
+    // console.log('prevData : ', prevData)
+    // console.log('currData : ', currData)
+
+    let covidCopy = this.state.covid
+    covidCopy.dateTime = currData.createDt // 등록일시분초
+    covidCopy.confirmed = this.addComma(currData.decideCnt) // 확진자 수
+    // covidCopy.released = this.addComma(currData.clearCnt) // 격리해제 수 (21.12.3 삭제)
+    covidCopy.deceased = this.addComma(currData.deathCnt) // 사망자 수
+    // covidCopy.inProgress = this.addComma(currData.examCnt) // 검사진행 수 (21.12.3 삭제)
+
+    covidCopy.confirmedDailyChange = this.addComma(
+      currData.decideCnt - prevData.decideCnt
+    ) // 확진자 변화량
+    // covidCopy.releasedDailyChange = this.addComma(currData.clearCnt - prevData.clearCnt) // 격리해제 변화량 (21.12.3 삭제)
+    covidCopy.deceasedDailyChange = this.addComma(
+      currData.deathCnt - prevData.deathCnt
+    ) // 사망자 변화량
+    // covidCopy.inProgressDailyChange = this.addComma(currData.examCnt - prevData.examCnt) // 검사진행 변화량 (21.12.3 삭제)
+
+    this.setState({
+      covid: covidCopy
+    })
+  }
+
+  addComma = num => {
+    let regExp = /\B(?=(\d{3})+(?!\d))/g
+    return num.toString().replace(regExp, ',')
+  }
+
   formatDate = () => {
     let todayDate = new Date()
     let today = this.calculateDate(todayDate)
