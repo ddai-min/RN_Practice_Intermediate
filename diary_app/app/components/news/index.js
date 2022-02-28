@@ -192,6 +192,29 @@ class NewsComponent extends Component {
     return finalDate
   }
 
+  selectEmoticon = () => {
+    const fineDustLevel = this.state.dust.fineDustLevel
+    let emoticonPath
+
+    switch (fineDustLevel) {
+      case '좋음':
+        emoticonPath = require('../../assets/images/very_good.png')
+        return emoticonPath
+      case '보통':
+        emoticonPath = require('../../assets/images/good.png')
+        return emoticonPath
+      case '나쁨':
+        emoticonPath = require('../../assets/images/bad.png')
+        return emoticonPath
+      case '매우 나쁨':
+        emoticonPath = require('../../assets/images/very_bad.png')
+        return emoticonPath
+      default:
+        emoticonPath = require('../../assets/images/very_good.png')
+        return emoticonPath
+    }
+  }
+
   render() {
     return (
       <View style={styles.newsContainer}>
@@ -208,7 +231,7 @@ class NewsComponent extends Component {
               justifyContent: 'center',
               flexDirection: 'row'
             }}>
-            <Text style={styles.timeText}>mm.dd. xx:xx </Text>
+            <Text style={styles.timeText}>{this.state.covid.dateTime} </Text>
             <Text style={styles.timeText}>기준</Text>
           </View>
 
@@ -218,27 +241,56 @@ class NewsComponent extends Component {
             </View>
 
             <View style={{ flex: 1 }}>
-              <Text style={[styles.mainText, styles.redText]}>10,000</Text>
+              <Text style={[styles.mainText, styles.redText]}>
+                {this.state.covid.confirmed}
+              </Text>
             </View>
 
-            <View style={{ flex: 1 }}>
-              <Text style={{ fontSize: 20 }}>▲450</Text>
-            </View>
+            {this.state.covid.confirmedDailyChange > 0 ? (
+              <View style={{ flex: 1, flexDirection: 'row' }}>
+                <Text style={{ fontSize: 20 }}>▲ </Text>
+                <Text style={{ fontSize: 20 }}>
+                  {this.addComma(this.state.covid.confirmedDailyChange)}
+                </Text>
+              </View>
+            ) : (
+              <View style={{ flex: 1, flexDirection: 'row' }}>
+                <Text style={{ fontSize: 20 }}>▼ </Text>
+                <Text style={{ fontSize: 20 }}>
+                  {this.addComma(this.state.covid.confirmedDailyChange)}
+                </Text>
+              </View>
+            )}
           </View>
 
+          {/* ------------------------21.12.3 삭제------------------------
           <View style={styles.contentView}>
             <View style={{ flex: 1 }}>
               <Text style={styles.mainText}>격리해제</Text>
             </View>
 
             <View style={{ flex: 1 }}>
-              <Text style={[styles.mainText, styles.blueText]}>5,000</Text>
+              <Text style={[styles.mainText, styles.blueText]}>
+                {this.state.covid.released}
+              </Text>
             </View>
 
-            <View style={{ flex: 1 }}>
-              <Text style={{ fontSize: 20 }}>▲260</Text>
-            </View>
-          </View>
+            {this.state.covid.releasedDailyChange > 0 ? (
+              <View style={{ flex: 1, flexDirection: 'row' }}>
+                <Text style={{ fontSize: 20 }}>▲ </Text>
+                <Text style={{ fontSize: 20 }}>
+                  {this.addComma(this.state.covid.releasedDailyChange)}
+                </Text>
+              </View>
+            ) : (
+              <View style={{ flex: 1, flexDirection: 'row' }}>
+                <Text style={{ fontSize: 20 }}>▼ </Text>
+                <Text style={{ fontSize: 20 }}>
+                  {this.addComma(this.state.covid.releasedDailyChange)}
+                </Text>
+              </View>
+            )}
+          </View> */}
 
           <View style={styles.contentView}>
             <View style={{ flex: 1 }}>
@@ -246,27 +298,56 @@ class NewsComponent extends Component {
             </View>
 
             <View style={{ flex: 1 }}>
-              <Text style={[styles.mainText, styles.grayText]}>400</Text>
+              <Text style={[styles.mainText, styles.grayText]}>
+                {this.state.covid.deceased}
+              </Text>
             </View>
 
-            <View style={{ flex: 1 }}>
-              <Text style={{ fontSize: 20 }}>▲0</Text>
-            </View>
+            {this.state.covid.deceasedDailyChange > 0 ? (
+              <View style={{ flex: 1, flexDirection: 'row' }}>
+                <Text style={{ fontSize: 20 }}>▲ </Text>
+                <Text style={{ fontSize: 20 }}>
+                  {this.addComma(this.state.covid.deceasedDailyChange)}
+                </Text>
+              </View>
+            ) : (
+              <View style={{ flex: 1, flexDirection: 'row' }}>
+                <Text style={{ fontSize: 20 }}>▼ </Text>
+                <Text style={{ fontSize: 20 }}>
+                  {this.addComma(this.state.covid.deceasedDailyChange)}
+                </Text>
+              </View>
+            )}
           </View>
 
+          {/* ------------------------21.12.3 삭제------------------------
           <View style={styles.contentView}>
             <View style={{ flex: 1 }}>
               <Text style={styles.mainText}>검사진행</Text>
             </View>
 
             <View style={{ flex: 1 }}>
-              <Text style={[styles.mainText, styles.grayText]}>1,500</Text>
+              <Text style={[styles.mainText, styles.grayText]}>
+                {this.state.covid.inProgress}
+              </Text>
             </View>
 
-            <View style={{ flex: 1 }}>
-              <Text style={{ fontSize: 20 }}>▲0</Text>
-            </View>
-          </View>
+            {this.state.covid.inProgressDailyChange > 0 ? (
+              <View style={{ flex: 1, flexDirection: 'row' }}>
+                <Text style={{ fontSize: 20 }}>▲ </Text>
+                <Text style={{ fontSize: 20 }}>
+                  {this.addComma(this.state.covid.inProgressDailyChange)}
+                </Text>
+              </View>
+            ) : (
+              <View style={{ flex: 1, flexDirection: 'row' }}>
+                <Text style={{ fontSize: 20 }}>▼ </Text>
+                <Text style={{ fontSize: 20 }}>
+                  {this.addComma(this.state.covid.inProgressDailyChange)}
+                </Text>
+              </View>
+            )}
+          </View> */}
         </View>
 
         <View style={styles.dustContainer}>
@@ -283,21 +364,30 @@ class NewsComponent extends Component {
               flexDirection: 'row'
             }}>
             <Text style={styles.timeText}>서울 </Text>
-            <Text style={styles.timeText}>mm.dd. xx:xx</Text>
-            <Text style={styles.timeText}> 기준</Text>
+            <Text style={styles.timeText}>{this.state.dust.dateTime} </Text>
+            <Text style={styles.timeText}>기준</Text>
           </View>
 
           <View style={{ flex: 1.8, justifyContent: 'center' }}>
             <View style={{ alignItems: 'center' }}>
               <Image
-                source={require('../../assets/images/very_good.png')}
+                source={this.selectEmoticon()}
                 style={{ width: 60, height: 60 }}
                 resizeMode="contain"
               />
             </View>
 
             <View style={{ alignItems: 'center', paddingTop: 8 }}>
-              <Text style={[styles.emoticonText, styles.blueText]}>좋음</Text>
+              {(this.state.dust.fineDustLevel === '좋음') |
+              (this.state.dust.fineDustLevel === '보통') ? (
+                <Text style={[styles.emoticonText, styles.blueText]}>
+                  {this.state.dust.fineDustLevel}
+                </Text>
+              ) : (
+                <Text style={[styles.emoticonText, styles.redText]}>
+                  {this.state.dust.fineDustLevel}
+                </Text>
+              )}
             </View>
           </View>
 
@@ -307,11 +397,20 @@ class NewsComponent extends Component {
             </View>
 
             <View style={{ flex: 1, alignItems: 'center' }}>
-              <Text style={[styles.mainText, styles.blueText]}>좋음</Text>
+              {(this.state.dust.fineDustLevel === '좋음') |
+              (this.state.dust.fineDustLevel === '보통') ? (
+                <Text style={[styles.emoticonText, styles.blueText]}>
+                  {this.state.dust.fineDustLevel}
+                </Text>
+              ) : (
+                <Text style={[styles.emoticonText, styles.redText]}>
+                  {this.state.dust.fineDustLevel}
+                </Text>
+              )}
             </View>
 
             <View style={{ flex: 1, flexDirection: 'row' }}>
-              <Text style={{ fontSize: 20 }}>30 </Text>
+              <Text style={{ fontSize: 20 }}>{this.state.dust.fineDust} </Text>
               <Text style={{ fontSize: 20 }}>μg/m3</Text>
             </View>
           </View>
@@ -322,11 +421,22 @@ class NewsComponent extends Component {
             </View>
 
             <View style={{ flex: 1, alignItems: 'center' }}>
-              <Text style={[styles.mainText, styles.blueText]}>좋음</Text>
+              {(this.state.dust.ultraFineDustLevel === '좋음') |
+              (this.state.dust.ultraFineDustLevel === '보통') ? (
+                <Text style={[styles.emoticonText, styles.blueText]}>
+                  {this.state.dust.ultraFineDustLevel}
+                </Text>
+              ) : (
+                <Text style={[styles.emoticonText, styles.redText]}>
+                  {this.state.dust.ultraFineDustLevel}
+                </Text>
+              )}
             </View>
 
             <View style={{ flex: 1, flexDirection: 'row' }}>
-              <Text style={{ fontSize: 20 }}>15 </Text>
+              <Text style={{ fontSize: 20 }}>
+                {this.state.dust.ultraFineDust}{' '}
+              </Text>
               <Text style={{ fontSize: 20 }}>μg/m3</Text>
             </View>
           </View>
@@ -337,11 +447,22 @@ class NewsComponent extends Component {
             </View>
 
             <View style={{ flex: 1, alignItems: 'center' }}>
-              <Text style={[styles.mainText, styles.blueText]}>좋음</Text>
+              {(this.state.dust.nitrogenDioxideLevel === '좋음') |
+              (this.state.dust.nitrogenDioxideLevel === '보통') ? (
+                <Text style={[styles.emoticonText, styles.blueText]}>
+                  {this.state.dust.nitrogenDioxideLevel}
+                </Text>
+              ) : (
+                <Text style={[styles.emoticonText, styles.redText]}>
+                  {this.state.dust.nitrogenDioxideLevel}
+                </Text>
+              )}
             </View>
 
             <View style={{ flex: 1, flexDirection: 'row' }}>
-              <Text style={{ fontSize: 20 }}>0.027 </Text>
+              <Text style={{ fontSize: 20 }}>
+                {this.state.dust.nitrogenDioxide}{' '}
+              </Text>
               <Text style={{ fontSize: 20 }}>ppm</Text>
             </View>
           </View>
